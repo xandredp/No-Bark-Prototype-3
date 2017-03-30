@@ -9,6 +9,11 @@ ASkyCycle::ASkyCycle()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	//60 mins 
+	valueForLength = 10.0f;
+	DayLengthInMins = 1.0f;
+	OneDay = DayLengthInMins * valueForLength;
+	OneHour = OneDay / 24.0f;
 
 }
 
@@ -24,5 +29,12 @@ void ASkyCycle::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+	Hour = (DeltaTime / OneHour) + Hour;
+
+}
+
+float ASkyCycle::GetHour()
+{
+	return Hour;
 }
 
