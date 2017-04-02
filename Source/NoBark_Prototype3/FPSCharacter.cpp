@@ -4,8 +4,10 @@
 #include "FPSCharacter.h"
 #include "Pickup.h"
 #include "Animation/AnimInstance.h"
+#include "GameController.h"
 #include "GameFramework/InputSettings.h"
 #include "Kismet/HeadMountedDisplayFunctionLibrary.h"
+#include "Interactable.h"
 
 
 AFPSCharacter::AFPSCharacter()
@@ -31,6 +33,14 @@ void AFPSCharacter::BeginPlay()
 	
 }
 
+void AFPSCharacter::Tick(float DeltaTime)
+{
+	// Call the base class  
+	Super::Tick(DeltaTime);
+
+	CheckForInteractables();
+
+}
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -84,4 +94,28 @@ void AFPSCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AFPSCharacter::CheckForInteractables()
+{
+	FHitResult HitResult;
+	FVector StartTrace = FirstPersonCameraComponent->GetComponentLocation();
+	FVector EndTrace = FirstPersonCameraComponent->GetForwardVector() * 300 + StartTrace;
+
+	FCollisionQueryParams QueryParam;
+	QueryParam.AddIgnoredActor(this);
+
+	AGameController* Controller = Cast<AGameController>(GetController());
+	if(GetWorld()->LineTraceSingleByChannel(HitResult, StartTrace, EndTrace, ECC_Visibility, QueryParam) && Controller)
+	{
+		if(AInteractable * Interactable = Cast<AInteractable>(HitResult.GetActor()))
+		{
+			Controller->CurrentInteractable = Interactable;
+			return;
+		}
+	}
+
+	// the thing that hit is not an interactable item set the current interactable to nulll ptr
+	Controller->CurrentInteractable = nullptr;
+
 }

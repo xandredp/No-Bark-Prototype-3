@@ -14,6 +14,10 @@ class NOBARK_PROTOTYPE3_API AGameController : public APlayerController
 	GENERATED_BODY()
 	
 	
-	
+public:
+	// This is used in player for items looked at. 
+	class AInteractable* CurrentInteractable;
+
+
 	
 };

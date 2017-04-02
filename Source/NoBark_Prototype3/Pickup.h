@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "GameFramework/Actor.h"
+#include "Interactable.h"
 #include "Pickup.generated.h"
 
 UCLASS()
-class NOBARK_PROTOTYPE3_API APickup : public AActor
+class NOBARK_PROTOTYPE3_API APickup : public AInteractable
 {
 	GENERATED_BODY()
 
@@ -41,6 +41,9 @@ public:
 	/** the mesh for the Pickup**/
 	UPROPERTY(EditAnywhere, Category = "Pickup", meta = (AllowPrivateAccess = "true"))
 		class UStaticMeshComponent* PickupMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup", meta = (AllowPrivateAccess = "true"))
+		FName ItemID;
 
 protected:
 
