@@ -12,7 +12,6 @@ APickup::APickup()
 	PrimaryActorTick.bCanEverTick = true;
 
 	PickupMesh = CreateDefaultSubobject < UStaticMeshComponent >(TEXT("PickupMesh"));
-	ItemID = FName("PleaseEnterID");
 	RootComponent = PickupMesh;
 	//All Pickup start active
 	bIsActive = true;

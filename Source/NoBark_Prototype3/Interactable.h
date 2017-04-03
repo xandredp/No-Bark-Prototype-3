@@ -17,16 +17,9 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-	UFUNCTION(BlueprintImplementableEvent)
-		void Use(APlayerController* Controller);
+	// Called every frame
+	virtual void Tick( float DeltaSeconds ) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable", Meta = (BlueprintProtected = "true"))
-	FString Name;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable", Meta = (BlueprintProtected = "true"))
-	FString Action;
-
-	UFUNCTION(BlueprintCallable, Category = "Pickup")
-	FString GetUseText() const { return FString::Printf(TEXT("%s : Press E to %s"), *Name, *Action); }
 	
 };
